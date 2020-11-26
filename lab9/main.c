@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//warcaby
+
 char* tablica[25][33];
 int czyjruch=0, punktybialy=0, punktyczarny=0;
 
@@ -272,40 +272,38 @@ void informacja()
     printf("POWODZENIA! \n");
 }
 
-char czywygrana()
+int wygranaa=0;
+void czywygrana()
 {
-    int ilosc=0;
+    int iloscb=0;
+    int iloscc=0;
+    char *wygrany;
     for(int i=0;i<25;i++)
     {
         for(int j=0;j<33;j++)
         {
-            if(tablica[i][j]=='B' || tablica[i][j]=='C' ) ilosc++;
+            if(tablica[i][j]=='B') iloscb++;
+            if(tablica[i][j]=='C') iloscc++;
         }
     }
-    if(ilosc>1) return "";
-    char *wygrany;
-    if(ilosc==1)
-    {
-            for(int i=0;i<25;i++)
+            if(iloscb>0 &&iloscc==0)
             {
-                for(int j=0;j<33;j++)
-                {
-                    if(tablica[i][j]=='B' || tablica[i][j]=='C' )
-                    {
-                        if(tablica[i][j]=='C')
-                        {
-                            wygrany="czarny";
-                        }
-                        else wygrany="bialy";
-                    }
-                }
+                wygrany="bialy";
+                printf("KONIEC GRY !!! \n");
+                printf("wygral: %s" ,wygrany);
+                wygranaa++;
+
             }
-            printf("KONIEC GRY !!! \n");
-            printf("wygral: " );
-            return wygrany;
+                if(iloscc>0 &&iloscb==0)
+            {
+                wygrany="czarny";
+                printf("KONIEC GRY !!! \n");
+                printf("wygral: %s ",wygrany );
+                wygranaa++;
+            }
     }
 
-}
+
 int main()
 {
     informacja();
@@ -313,15 +311,12 @@ int main()
     plansza();
     ustawieniepionkow();
     wyswietlanie();
-    while(1)
+    while(wygranaa==0)
     {
          ruchy();
          system("cls");
          wyswietlanie();
-         if(czywygrana()==1)
-         {
-             printf("%s",czywygrana());
-         }
+         czywygrana();
 
     }
 
